@@ -8,13 +8,22 @@ import lombok.NoArgsConstructor
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-class User {
+class User(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    var id: Long? = null,
 
-    open var name: String? = null
+    var name: String? = null,
 
-    open var password: String? = null
-}
+    var password: String? = null,
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_authorities",
+        joinColumns = [JoinColumn(name = "userId")],
+        inverseJoinColumns = [JoinColumn(name = "authorityId")]
+        )
+    var authorities: Set<Authority>? = null
+
+)
