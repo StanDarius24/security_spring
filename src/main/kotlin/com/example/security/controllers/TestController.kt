@@ -9,7 +9,7 @@ class TestController {
 
     @GetMapping("/test")
      fun test(): String { // BasicAuthenticationFilter
-        var u = SecurityContextHolder.getContext().authentication
+        val u = SecurityContextHolder.getContext().authentication
         u.authorities.forEach{ println(it) }
         return "Test";
     }
