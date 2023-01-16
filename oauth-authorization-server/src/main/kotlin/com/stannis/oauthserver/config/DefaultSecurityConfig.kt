@@ -11,7 +11,6 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.stereotype.Component
 
 @EnableWebSecurity
-@Component
 class DefaultSecurityConfig {
 
     @Autowired
