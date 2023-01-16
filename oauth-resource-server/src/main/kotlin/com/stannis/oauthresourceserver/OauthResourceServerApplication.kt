@@ -1,11 +1,11 @@
-package com.example.security
+package com.stannis.oauthresourceserver
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class SecurityApplication
+class OauthResourceServerApplication
 
 fun main(args: Array<String>) {
-	runApplication<SecurityApplication>(*args)
+	runApplication<OauthResourceServerApplication>(*args)
 }

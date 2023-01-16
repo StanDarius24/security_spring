@@ -23,12 +23,11 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings
 import org.springframework.security.web.SecurityFilterChain
-
 import java.security.KeyPair
 import java.security.KeyPairGenerator
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
-import java.util.UUID
+import java.util.*
 
 
 @Configuration(proxyBeanMethods = false)
@@ -39,11 +38,15 @@ class AuthorizationServerConfig {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    fun authServerSecurityFilterChain(http: HttpSecurity) : SecurityFilterChain {
+    @Throws(
+        java.lang.Exception::class
+    )
+    fun authServerSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http)
         return http.formLogin(Customizer.withDefaults()).build()
     }
 
+    @Bean
     fun registeredClientRepository(): RegisteredClientRepository {
         val registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
             .clientId("api-client")
