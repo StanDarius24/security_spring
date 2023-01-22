@@ -8,7 +8,7 @@
 		<version>3.0.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.stannis</groupId>
 	<artifactId>security</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>security</name>
@@ -18,9 +18,9 @@
 		<kotlin.version>1.7.21</kotlin.version>
 	</properties>
 	<modules>
-		<module>oauth-authorization-server</module>
-		<module>oauth-security-client</module>
-		<module>oauth-resource-server</module>
+		<module>backend-resource</module>
+		<module>backend-auth</module>
+		<module>backend-client</module>
 	</modules>
 
 </project>
