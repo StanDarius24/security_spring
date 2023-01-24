@@ -12,7 +12,8 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 @AllArgsConstructor
-class CustomAuthenticationFilter(customAuthenticationManager: CustomAuthenticationManager) : OncePerRequestFilter() { // in the filter chain there is no guarantee that the filter is only one time called (FILTER INTERFACE)
+class CustomAuthenticationFilter(customAuthenticationManager: CustomAuthenticationManager) : OncePerRequestFilter() {
+// in the filter chain there is no guarantee that the filter is only one time called (extend FILTER INTERFACE)
 
     private final val customAuthenticationManager: CustomAuthenticationManager
 
@@ -38,13 +39,10 @@ class CustomAuthenticationFilter(customAuthenticationManager: CustomAuthenticati
 
         if (a != null) {
             if (a.isAuthenticated) {
-
                 SecurityContextHolder.getContext().authentication = a
                 filterChain.doFilter(request, response) // propagate to the next filter :D
-
             }
         }
     }
-
 
 }

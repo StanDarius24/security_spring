@@ -11,7 +11,7 @@ class TestController {
      fun test(): String { // BasicAuthenticationFilter
         val u = SecurityContextHolder.getContext().authentication
         u.authorities.forEach{ println(it) }
-        return "Test";
+        return "Test"
     }
 
 }

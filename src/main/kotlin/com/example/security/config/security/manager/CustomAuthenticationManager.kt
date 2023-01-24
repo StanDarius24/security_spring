@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 
 @Component
-class CustomAuthenticationManager(provider: CustomAuthenticationProvider) :AuthenticationManager {
+class CustomAuthenticationManager(provider: CustomAuthenticationProvider): AuthenticationManager {
 
     private val provider: CustomAuthenticationProvider
 
@@ -15,8 +15,8 @@ class CustomAuthenticationManager(provider: CustomAuthenticationProvider) :Authe
         this.provider = provider
     }
 
-    override fun authenticate(authentication: Authentication?): Authentication? {
-        if (provider.supports(authentication?.javaClass)) {
+    override fun authenticate(authentication: Authentication): Authentication? {
+        if (provider.supports(authentication.javaClass)) {
             return provider.authenticate(authentication)
         }
 

@@ -24,8 +24,8 @@ class SecurityConfig(customAuthenticationFilter: CustomAuthenticationFilter) {
         return http.addFilterAt(
             customAuthenticationFilter,
             UsernamePasswordAuthenticationFilter::class.java
-        )
-            .authorizeRequests().anyRequest().authenticated() // ignore this for now
+        ) // add a filter in UsernamePasswordAuthenticationFilter (customAuthenticationFilter)
+            .authorizeHttpRequests().anyRequest().authenticated() // ignore this for now
             .and()
             .build()
 

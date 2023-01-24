@@ -8,12 +8,12 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 
 @Component
-class CustomAuthenticationProvider :AuthenticationProvider {
+class CustomAuthenticationProvider: AuthenticationProvider {
 
     @Value("\${secret.key}")
     private lateinit var key :String
 
-    override fun authenticate(authentication: Authentication?): Authentication? {
+    override fun authenticate(authentication: Authentication): Authentication? {
         val ca = authentication as CustomAuthentication
 
         val headerKey = ca.key
