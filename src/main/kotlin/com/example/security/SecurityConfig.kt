@@ -2,6 +2,7 @@ package com.example.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -26,9 +27,12 @@ class SecurityConfig {
 //            .anyRequest().hasAnyAuthority("read", "write")
 //            .anyRequest().hasAnyRole("ADMIN", "MANAGER")
 //            .anyRequest().access("isAuthenticated() and hasAuthority('read')") // SpEL
-            .requestMatchers("/hello").hasAuthority("read")
+//            .requestMatchers("/hello1").authenticated()
+//            .requestMatchers("/hello2").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/**").hasAuthority("read")
             .anyRequest().authenticated()
             .and()
+            .csrf().disable()
             .build()
         // matcher method + authorization rule
         // 1. which matcher methods should you use and how
