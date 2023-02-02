@@ -1,27 +1,42 @@
 package com.example.controller
 
-import com.example.dto.Message
-import org.springframework.web.bind.annotation.*
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api")
 class DemoController {
 
-    @GetMapping("/hello1")
-    fun hello1(): String {
-        return "Hello World 1!"
+    @GetMapping("/hello")
+    @PreAuthorize("hasAuthority('read')")
+    fun hello(): String {
+        return "Hello World!"
     }
 
-    @GetMapping("/hello2")
-    fun hello2(): String {
-        return "Hello World 2!"
+    @GetMapping("/demo")
+    @PreAuthorize("hasAnyAuthority('read', 'write')")
+    fun demo(): String {
+        return "Hello Demo!"
     }
 
-    @PostMapping("/hello3")
-    fun hello3(@RequestBody example: Message): Message{
-        println(example.text)
-        println(example.id)
-        return example
+    @GetMapping("/demo2/{something}")
+    @PreAuthorize(
+            """
+                hasAuthority('write') or 
+                #something == authentication.name
+            """
+    ) // not recommended hard to debug
+    fun index(@PathVariable("something") something: String): String {
+        return "Hello Index!"
     }
+
+    // do this instead
+    @GetMapping("/demo3/{something}")
+    @PreAuthorize("@demo4ConditionEvaluator.condition()") // using a bean
+    fun index2(@PathVariable("something") something: String): String {
+        return "Hello Index2!"
+    }
+
 
 }
