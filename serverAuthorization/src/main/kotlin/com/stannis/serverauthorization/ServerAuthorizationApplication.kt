@@ -1,11 +1,11 @@
-package com.example
+package com.stannis.serverauthorization
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class SecurityApplication
+class ServerAuthorizationApplication
 
 fun main(args: Array<String>) {
-	runApplication<SecurityApplication>(*args)
+	runApplication<ServerAuthorizationApplication>(*args)
 }
