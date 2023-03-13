@@ -27,22 +27,24 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import java.security.KeyPairGenerator
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
 import java.util.*
 
 @Configuration
 class SecurityConfig {
 
     @Bean
-    @Throws(Exception::class)
     @Order(1)
-    fun authorizationSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    @Throws(Exception::class)
+    fun asSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http)
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer::class.java)
             .oidc(Customizer.withDefaults())
 
-        http.exceptionHandling{
-            it.authenticationEntryPoint(
+        http.exceptionHandling { exceptionHandling ->
+            exceptionHandling.authenticationEntryPoint(
                 LoginUrlAuthenticationEntryPoint("/login")
             )
         }
@@ -51,12 +53,15 @@ class SecurityConfig {
     }
 
     @Bean
-    @Throws(Exception::class)
     @Order(2)
-    fun applicationSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    @Throws(Exception::class)
+    fun appSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.formLogin()
             .and()
-            .authorizeHttpRequests().anyRequest().authenticated()
+            .authorizeHttpRequests()
+            .anyRequest()
+            .authenticated()
+
         return http.build()
     }
 
@@ -64,9 +69,9 @@ class SecurityConfig {
     fun userDetailsService(): UserDetailsService {
         val u1 = User.withUsername("user")
             .password("password")
-            .roles("read")
-            .build()
-        return InMemoryUserDetailsManager(u1)
+            .authorities("read")
+
+        return InMemoryUserDetailsManager(u1.build())
     }
 
     @Bean
@@ -75,21 +80,23 @@ class SecurityConfig {
     }
 
     @Bean
-    fun registeredClientRepository(): RegisteredClientRepository {
+    fun registerClientRepository(): RegisteredClientRepository {
         val r1 = RegisteredClient.withId(UUID.randomUUID().toString())
             .clientId("client")
             .clientSecret("secret")
             .scope(OidcScopes.OPENID)
-            .scope(OidcScopes.PROFILE) // need to be enabled -> oidc(Customizer.withDefaults())
-            .redirectUri("https://springone.io/authorized")
+            .scope(OidcScopes.PROFILE)
+            .redirectUri("https://spring.io/authorized")
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .build()
+
         return InMemoryRegisteredClientRepository(r1)
     }
 
     @Bean
-    fun authorizationServerSettings(): AuthorizationServerSettings {
+    fun authorizationServerSettings() : AuthorizationServerSettings {
         return AuthorizationServerSettings.builder()
             .build()
     }
@@ -97,19 +104,20 @@ class SecurityConfig {
     @Bean
     @Throws(Exception::class)
     fun jwkSource(): JWKSource<SecurityContext> {
-        val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
-        keyPairGenerator.initialize(2048)
-        val keyPair = keyPairGenerator.generateKeyPair()
+        val kg = KeyPairGenerator.getInstance("RSA")
+        kg.initialize(2048)
+        val kp = kg.generateKeyPair()
 
-        val publicKey = keyPair.public
-        val privateKey = keyPair.private
+        val publicKey = kp.public as RSAPublicKey
+        val privateKey = kp.private as RSAPrivateKey
 
-        val key = RSAKey.Builder(publicKey as java.security.interfaces.RSAPublicKey)
-            .privateKey(privateKey as java.security.interfaces.RSAPrivateKey)
+        val key = RSAKey.Builder(publicKey)
+            .privateKey(privateKey)
             .keyID(UUID.randomUUID().toString())
             .build()
 
         val set = JWKSet(key)
+
         return ImmutableJWKSet(set)
     }
 
