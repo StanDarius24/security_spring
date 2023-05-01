@@ -17,10 +17,8 @@
 		<java.version>17</java.version>
 		<kotlin.version>1.7.21</kotlin.version>
 	</properties>
-	<modules>
-		<module>backend-resource</module>
-		<module>backend-auth</module>
-		<module>backend-client</module>
-	</modules>
 
+	<modules>
+		<module>authorizationServer</module>
+	</modules>
 </project>
