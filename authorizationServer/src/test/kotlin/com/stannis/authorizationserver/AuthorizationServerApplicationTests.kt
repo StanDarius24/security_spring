@@ -1,10 +1,10 @@
-package com.stannis.serverauthorization
+package com.stannis.authorizationserver
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class ServerAuthorizationApplicationTests {
+class AuthorizationServerApplicationTests {
 
 	@Test
 	fun contextLoads() {
