@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ### Method Authorization example
 
 ---
@@ -14,7 +13,6 @@
 
 ![](etc/img2.png)
 
-=======
 
 ## SpringBoot + Kotlin
 
@@ -35,4 +33,3 @@ Understanding OAuth2.0 flow
 ---
 
 stannis24 -> $2y$12$7klIYWXJUbqwkpJ5VyFV..ioV7Jh9L44/tHlDIUIs/tMo3YIqhtTu
->>>>>>> feature/authorizationServer
