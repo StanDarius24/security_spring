@@ -20,5 +20,6 @@
 
 	<modules>
 		<module>authorizationServer</module>
+		<module>resourceServer</module>
 	</modules>
 </project>
