@@ -11,6 +11,7 @@ import org.springframework.core.annotation.Order
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationProvider
@@ -112,6 +113,12 @@ class SecurityConfig {
     fun oAuth2TokenCustomizer(): OAuth2TokenCustomizer<JwtEncodingContext>? {
         return OAuth2TokenCustomizer { context: JwtEncodingContext ->
             context.claims.claim("test", "test")
+            context.claims.claim(
+                "authorities", context.getPrincipal<Authentication?>()
+                    .authorities.stream()
+                    .map { it.authority }
+                    .toList()
+            )
         }
     }
 
