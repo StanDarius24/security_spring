@@ -11,11 +11,10 @@ class CustomJwtAuthenticationTokenConverter :
         val authorities =
             source.claims["authorities"] as List<String>
         return CustomJwtAuthenticationToken(
-            source, authorities.stream().map { role: String ->
-                SimpleGrantedAuthority(
-                    role
-                )
-            }.toList()
+            source,
+            authorities.stream()
+                .map { SimpleGrantedAuthority(it) }
+                .toList()
         )
     }
 }

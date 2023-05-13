@@ -113,7 +113,12 @@ class SecurityConfig {
     fun oAuth2TokenCustomizer(): OAuth2TokenCustomizer<JwtEncodingContext>? {
         return OAuth2TokenCustomizer { context: JwtEncodingContext ->
             context.claims.claim("test", "test")
-            context.claims.claim("authorities", context.getPrincipal<Authentication?>().authorities)
+            context.claims.claim(
+                "authorities", context.getPrincipal<Authentication?>()
+                    .authorities.stream()
+                    .map { it.authority }
+                    .toList()
+            )
         }
     }
 
