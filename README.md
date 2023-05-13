@@ -2,6 +2,10 @@
 
 ---
 
+#### There are 2 branches, for opaque and non-opaque tokens
+
+---
+
 ![](etc/img1.png)
 
 1. How does the client get a token (grant types)?
