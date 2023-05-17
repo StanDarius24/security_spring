@@ -1,3 +1,20 @@
+# For multitenancy
+
+Run in authorizationServer dir
+
+```bash
+docker build -t authorizationserver1 .
+```
+
+then run 
+
+```bash
+docker compose up
+```
+
+dont forget to close the service.
+
+
 ### Method Authorization example
 
 ---

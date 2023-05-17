@@ -1,3 +1,5 @@
+CREATE DATABASE "authorizationServer";
+
 CREATE TABLE auth_user(
                           id INT,
                           username varchar(45),
