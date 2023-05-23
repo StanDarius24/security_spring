@@ -21,6 +21,5 @@
 	<modules>
 		<module>authorizationServer</module>
 		<module>resourceServer</module>
-		<module>clientServer</module>
 	</modules>
 </project>
