@@ -1,56 +1,28 @@
-# For multitenancy
-
-Run in authorizationServer dir
-
-```bash
-docker build -t authorizationserver1 .
-```
-
-then run 
-
-```bash
-docker compose up
-```
-
-dont forget to close the service.
-
-
-### Method Authorization example
+### CORS (Cross-site request forgery)
 
 ---
 
-#### There are 2 branches, for opaque and non-opaque tokens
+- `works only on change data request type (its not about stealing information, but more of changing information)`
+- `applies only on session based authentication`
 
 ---
 
-![](etc/img1.png)
-
-1. How does the client get a token (grant types)?
-2. How does the resource server (backend) validate and get data with the token?
-
-- [ ] 1.1. Authorization Code Grant (PKCE)
-- [ ] 1.2. Client Credentials Grant
-- [ ] 1.3. Refresh Token Grant 
-
-![](etc/img2.png)
-
-
-## SpringBoot + Kotlin
+Cross-site request forgery (also known as CSRF) is a web security vulnerability that allows an attacker to induce users to perform actions that they do not intend to perform. It allows an attacker to partly circumvent the same origin policy, which is designed to prevent different websites from interfering with each other.
 
 ---
 
-Oauth-backend-auth
-
-Oauth-backend-client
-
-Oauth-backend-resource
+In a successful CSRF attack, the attacker causes the victim user to carry out an action unintentionally. For example, this might be to change the email address on their account, to change their password, or to make a funds transfer. Depending on the nature of the action, the attacker might be able to gain full control over the user's account. If the compromised user has a privileged role within the application, then the attacker might be able to take full control of all the application's data and functionality.
 
 ---
 
-Implementation of authorization server, resource server and client.
+For a CSRF attack to be possible, three key conditions must be in place:
 
-Understanding OAuth2.0 flow
+A relevant action. There is an action within the application that the attacker has a reason to induce. This might be a privileged action (such as modifying permissions for other users) or any action on user-specific data (such as changing the user's own password).
+Cookie-based session handling. Performing the action involves issuing one or more HTTP requests, and the application relies solely on session cookies to identify the user who has made the requests. There is no other mechanism in place for tracking sessions or validating user requests.
+No unpredictable request parameters. The requests that perform the action do not contain any parameters whose values the attacker cannot determine or guess. For example, when causing a user to change their password, the function is not vulnerable if an attacker needs to know the value of the existing password.
 
 ---
 
-stannis24 -> $2y$12$7klIYWXJUbqwkpJ5VyFV..ioV7Jh9L44/tHlDIUIs/tMo3YIqhtTu
+![img.png](etc/img.png)
+
+Spring automatically added csrf token
