@@ -1,4 +1,4 @@
-### CORS (Cross-site request forgery)
+### CSRF (Cross Site Request Forgery )
 
 ---
 
