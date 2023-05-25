@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript">
+        function call() {
+            const h = new XMLHttpRequest();
+            h.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById("output").innerHTML = this.responseType
+                }
+            }
+            // h.open("GET", "http://localhost:8083/demo"); --> this works
+            h.open("GET", "http://127.0.0.1:8083/demo"); // this doesn't different origin
+            h.send();
+        }
+    </script>
 </head>
-<body>
-<h1>Hello</h1>
-<form action="/smth" method="post">
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}"
-    />
-    <button type="submit">BOOM!</button>
-</form>
+<body onload="call()">
+
 </body>
 </html>

@@ -4,21 +4,27 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
 
 @Configuration
 class SecurityConfig {
 
+
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilter(http: HttpSecurity): SecurityFilterChain {
+
         http.authorizeHttpRequests()
-            .anyRequest()
-            .permitAll()
+                .anyRequest()
+                .permitAll()
 
-//        http.csrf().disable() //dont do that bcs our security is based on session
+        http.cors{
+            it.configurationSource {
+                val configuration = CorsConfiguration()
+                configuration.allowedOrigins = listOf("*") // add here links (in app.properties) never *
+                return@configurationSource configuration
+            }
+        }
 
-//        http.csrf().ignoringRequestMatchers("/smth").disable() // if you have a specific path
-
-        http.csrf() // attach to the header the paramName and the token
 
         return http.build()
     }
