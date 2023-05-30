@@ -4,6 +4,13 @@
 
 #### There are 2 branches, for opaque and non-opaque tokens
 
+Also, there are some branches with CORS, CSRF and MULTI-TENANCY and TESTING.
+
+If you are using reactive apps, and you are looking for a guide of how to implement security there I have a different repo
+https://github.com/StanDarius24/spring_reactive
+
+GL HF!
+
 ---
 
 ![](etc/img1.png)
